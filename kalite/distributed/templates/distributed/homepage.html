@@ -8,6 +8,7 @@
 
 {% block headcss %}{{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'css/distributed/homepage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/introjs.css' %}">
 {% endblock headcss %}
 
 {% block headjs %}{{ block.super }}
@@ -16,6 +17,8 @@
     <script type="text/javascript" src="{% static 'js/playlist/models.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery.dotdotdot.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/distributed/homepage_playlists.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/intro.js' %}"></script>
+
     {% if settings.AUTO_LOAD_TEST %}{# TODO(bcipolli): eliminate this, make the load testing app inherit from / override this page #}
     <script>
         if (window.parent.frames.length === 0) {
@@ -54,10 +57,24 @@
         </tr>
       </table>
     </script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#introjs-trigger').click(function() {
+          // introJs().start();
+          introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+            window.location.href = 'securesync/login?multipage=true';
+          })
+        });
+      });
+    </script>
 {% endblock headjs %}
 
 {% block content %}
 {% block subnavbar %}{{block.super}}{% endblock subnavbar %}
+<button id='introjs-trigger'>Start Tour!</button>
+<div data-intro='Hello, step one!'>Lorem Ipsum</div>
+<div data-intro='Hello, step two!'>Lorem Ipsum</div>
     <div class="container">
 
         <div class="row">

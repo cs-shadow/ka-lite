@@ -1,5 +1,6 @@
 {% extends base_template %}
 {% load i18n %}
+{% load kalite_staticfiles %}
 
 {% block login_active %}{% trans "active" %}{% endblock login_active %}
 
@@ -11,9 +12,12 @@
             margin-top: 30px;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/introjs.css' %}">
+    <script type="text/javascript" src="{% static 'js/intro.js' %}"></script>
 {% endblock headcss %}
 
 {% block content %}
+<div data-intro='Hello, step three!'>Lorem Ipsum</div>
     <div class="container">
         <form method="post" class="basic-form">
             {% csrf_token %}
@@ -32,4 +36,9 @@
             {% endif %}
         </div>
     </div>
+    <script type="text/javascript">
+      if (RegExp('multipage', 'gi').test(window.location.search)) {
+        introJs().start();
+      }
+    </script>
 {% endblock content %}
